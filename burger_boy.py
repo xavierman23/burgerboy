@@ -343,26 +343,7 @@ while True:
             point = 0
             start = 0
 
-        if point >= 1:
-            player_speed = 10
-            if point >= 100:
-                player_speed = 9
-                if point >= 200:
-                    player_speed = 8
-                    if point >= 300:
-                        player_speed = 7
-                        if point >= 400:
-                            player_speed = 6
-                            if point >= 500:
-                                player_speed = 5
-                                if point >= 600:
-                                    player_speed = 4
-                                    if point >= 700:
-                                        player_speed = 3
-                                        if point >= 800:
-                                            player_speed = 2
-                                            if point >= 900:
-                                                player_speed = 1
+        player_speed = 10 - point/100
 
         draw_text('Points = %s Pounds' % point, font, screen, 5, 5)
         draw_text('Speed = %s rolls per second' % player_speed, font, screen, 5, 85)
