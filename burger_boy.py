@@ -20,7 +20,7 @@ bulletmove = 1
 bullet_speed = 17
 
 #burger_king = pygame.Rect
-
+# test
 bullet1 = pygame.Rect(1, 660, 15, 15)
 bullet2 = pygame.Rect(1, 680, 15, 15)
 bullet3 = pygame.Rect(1, 700, 15, 15)
