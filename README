@@ -1,0 +1,3 @@
+This is the Burger Boy game.
+
+It depends on the pygame library which can be installed with "pip install -r requirements.txt"
