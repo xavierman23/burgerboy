@@ -56,6 +56,7 @@ wall14 = pygame.Rect(0, 390, 1280, 15)
 wall15 = pygame.Rect(10, 340, 1270, 15)
 
 walll21 = pygame.Rect(0, 455, 1280, 10)
+walll22 = pygame.Rect()
 
 walll = [walll21]
 
