@@ -443,19 +443,20 @@ while True:
 
         for bullets in bullet:
             pygame.draw.rect(screen, (192, 192, 192), bullets)
+
+            if bulletmove == 2 and bullets.left > 0:
+                bullets.x -= bullet_speed
+                if not bullets.left > 0:
+                    bulletmove = 1
+            if bulletmove == 1 and bullets.right < 1280:
+                bullets.x += bullet_speed
+                if not bullets.right < 1280:
+                    bulletmove = 2
             if player.colliderect(bullets):
                 life -= 5
                 player.x = 640
                 player.y = 900
-            if bulletmove == 1:
-                bullets.x += bullet_speed
-            if bulletmove == 2:
-                bullets.x -= bullet_speed
 
-            if bullets.colliderect(sideline_right):
-                bulletmove += 1
-            if bullets.colliderect(sideline_left):
-                bulletmove -= 1
 
         draw_text('LifeForce = %s' % life, font, screen, 5, 5)
 
