@@ -19,7 +19,9 @@ life = 1000
 bulletmove = 1
 bullet_speed = 17
 
-# burger_king = pygame.Rect
+burgerkinghealth = 5
+burgerkingspeech = 1
+burger_king = pygame.Rect(640, 100, 40, 80)
 
 bullet1 = pygame.Rect(1, 660, 15, 15)
 bullet2 = pygame.Rect(1, 680, 15, 15)
@@ -56,7 +58,7 @@ wall14 = pygame.Rect(0, 390, 1280, 15)
 wall15 = pygame.Rect(10, 340, 1270, 15)
 
 walll21 = pygame.Rect(0, 455, 1280, 10)
-walll22 = pygame.Rect()
+# walll22 = pygame.Rect()
 
 walll = [walll21]
 
@@ -74,6 +76,12 @@ def draw_text(display_string, font, surface, x, y):
 
 bouncepad = pygame.Rect(630, 435, 20, 5)
 bouncepad_two = pygame.Rect(630, 0, 20, 5)
+
+bouncepadlvltwo = pygame.Rect(15, 500, 20, 10)
+bouncepadtwolvltwo = pygame.Rect(1245, 500, 20, 10)
+
+lvltwobouncepad = [bouncepadlvltwo, bouncepadtwolvltwo]
+
 wall = [wall11, wall12, wall13, wall14, wall15]
 
 burger_patty = pygame.Rect(1040, 45, 40, 20)
@@ -442,6 +450,50 @@ while True:
                 elif move_right:
                     player.x -= player_speed
 
+        pygame.draw.rect(screen, (236, 136, 21), burger_king)
+        if player.colliderect(burger_king):
+            burgerkinghealth -= 1
+            player.x = 640
+            player.y = 900
+            pygame.display.update()
+            time.sleep(1)
+            if burgerkingspeech == 1:
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                time.sleep(2)
+                draw_text('Aaaaaaaargh!', font, screen, 450, 450)
+                pygame.display.update()
+                time.sleep(1)
+                draw_text('Ha! Begginer\'s luck, but you won\'t get me again' font, screen, 450, 500)
+                bullet_speed += 1
+                pygame.display.update()
+                time.sleep(2)
+                burgerkingspeech += 1
+
+        for lvltwobouncepads in lvltwobouncepad:
+            pygame.draw.rect(screen, (0, 255, 0), lvltwobouncepads)
+            if player.colliderect(lvltwobouncepads):
+                if move_down:
+                    player.y -= 400
+                if move_up:
+                    player.y += player_speed
+                if move_right:
+                    player.x -= player_speed
+                if move_left:
+                    player.x += player_speed
+            if burgerkingspeech > 1:
+                bouncepadnumber = random.randint(1, 2)
+                if bouncepadnumber == 1:
+                    if player.colliderect(bouncepadlvltwo):
+                        if move_down:
+                            player.y -= 400
+                        if move_up:
+                            player.y += player_speed
+                        if move_right:
+                            player.x -= player_speed
+                        if move_left:
+                            player.x += player_speed
+
         for bullets in bullet:
             pygame.draw.rect(screen, (192, 192, 192), bullets)
 
@@ -460,6 +512,7 @@ while True:
 
 
         draw_text('LifeForce = %s' % life, font, screen, 5, 5)
+        draw_text('Burger King Health = %s' % burgerkinghealth, font, screen, 1000, 5)
 
         pygame.draw.rect(screen, (255, 211, 155), player)
         pygame.display.update()
