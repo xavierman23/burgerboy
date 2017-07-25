@@ -34,12 +34,24 @@ bullet8 = pygame.Rect(1, 800, 15, 15)
 bullet9 = pygame.Rect(1, 820, 15, 15)
 bullet10 = pygame.Rect(1, 840, 15, 15)
 
+bullett1 = pygame.Rect(570, 350, 20, 20)
+bullett2 = pygame.Rect(610, 350, 20, 20)
+bullett3 = pygame.Rect(650, 350, 20, 20)
+bullett4 = pygame.Rect(690, 350, 20, 20)
+
+bullett1moving = False
+bullett2moving = False
+bullett3moving = False
+bullett4moving = False
+
+
 sideline_left = pygame.Rect(0, 0, 1, 920)
 sideline_right = pygame.Rect(1279, 0, 1, 920)
 
 sideline = [sideline_left, sideline_right]
 
 bullet = [bullet1, bullet2, bullet3, bullet4, bullet5, bullet6, bullet7, bullet8, bullet9, bullet10]
+bullett = [bullett1, bullett2, bullett3, bullett4]
 
 screen = pygame.display.set_mode((1280, 920))
 screen.fill((236, 136, 21))
@@ -456,32 +468,59 @@ while True:
             player.x = 640
             player.y = 900
             pygame.display.update()
-            time.sleep(1)
-            if burgerkingspeech == 1:
+            if burgerkinghealth == 4:
                 screen.fill((0, 0, 0))
                 pygame.display.update()
-                time.sleep(2)
                 draw_text('Aaaaaaaargh!', font, screen, 450, 450)
                 pygame.display.update()
                 time.sleep(1)
-                draw_text('Ha! Begginer\'s luck, but you won\'t get me again' font, screen, 450, 500)
+                draw_text('Ha! Begginer\'s luck, but you won\'t get me again', font, screen, 450, 500)
                 bullet_speed += 1
                 pygame.display.update()
-                time.sleep(2)
+                time.sleep(3)
                 burgerkingspeech += 1
+            if burgerkinghealth == 3:
+                screen.fill((0,0,0))
+                pygame.display.update()
+                draw_text('Aaaaaaaargh!', font, screen, 450, 450)
+                pygame.display.update()
+                time.sleep(1)
+                draw_text('Lucky Shot! Then Again the luck seems to be on your side.', font, screen, 450, 500)
+                bullet_speed += 1
+                pygame.display.update()
+                time.sleep(1)
+                draw_text('I have raised the bullets speed to compensate for my lack of luck.', font, screen, 450, 550)
+                pygame.display.update()
+                time.sleep(3)
+            if burgerkinghealth == 2:
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                draw_text('Aaaaaaaargh!', font, screen, 450, 450)
+                pygame.display.update()
+                time.sleep(1)
+                draw_text('This is ridiculous. How could you possibly beat me?', font, screen, 450, 500)
+                bullet_speed += 1
+                pygame.display.update()
+                time.sleep(1)
+                draw_text('That was a rhetorical question. You Can\'t beat me!', font, screen, 450, 550)
+                pygame.display.update()
+                time.sleep(3)
+
+
 
         for lvltwobouncepads in lvltwobouncepad:
             pygame.draw.rect(screen, (0, 255, 0), lvltwobouncepads)
-            if player.colliderect(lvltwobouncepads):
-                if move_down:
-                    player.y -= 400
-                if move_up:
-                    player.y += player_speed
-                if move_right:
-                    player.x -= player_speed
-                if move_left:
-                    player.x += player_speed
-            if burgerkingspeech > 1:
+            if burgerkingspeech == 1:
+                if player.colliderect(lvltwobouncepads):
+                    if move_down:
+                        player.y -= 400
+                    if move_up:
+                        player.y += player_speed
+                    if move_right:
+                        player.x -= player_speed
+                    if move_left:
+                        player.x += player_speed
+            elif burgerkingspeech > 1:
                 bouncepadnumber = random.randint(1, 2)
                 if bouncepadnumber == 1:
                     if player.colliderect(bouncepadlvltwo):
@@ -493,6 +532,46 @@ while True:
                             player.x -= player_speed
                         if move_left:
                             player.x += player_speed
+                elif bouncepadnumber == 2:
+                    if player.colliderect(bouncepadtwolvltwo):
+                        if move_down:
+                            player.y -= 400
+                        if move_up:
+                           player.y += player_speed
+                        if move_right:
+                            player.x -= player_speed
+                        if move_left:
+                            player.x += player_speed
+
+            if burgerkinghealth < 3:
+                for bulletts in bullett:
+                    pygame.draw.rect(screen, (192,192,192), bulletts)
+                    if bullett1moving == False:
+                        if burgerkingspeech > 1:
+                            bullett1moving = True
+                            bullett2moving = True
+                            bullett3moving = True
+                            bullett4moving = True
+                    if bullett1moving == True:
+                        if bullett1.y < 920:
+                            bullett1.y += bullet_speed
+                            if not bullett1.y < 920:
+                                bullett1.y = 350
+                    if bullett2moving == True:
+                        if bullett2.y < 920:
+                            bullett2.y += bullet_speed
+                            if not bullett2.y < 920:
+                                bullett2.y = 360
+                    if bullett3moving == True:
+                        if bullet3.y < 920:
+                            bullett3.y += bullet_speed
+                            if not bullett3.y < 920:
+                                bullett3.y = 370
+                    if bullett4moving == True:
+                        if bullet4.y < 920:
+                            bullett4.y += bullet_speed
+                            if not bullett4.y <920:
+                                bullett4.y = 380
 
         for bullets in bullet:
             pygame.draw.rect(screen, (192, 192, 192), bullets)
